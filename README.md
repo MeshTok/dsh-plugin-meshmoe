@@ -10,6 +10,8 @@ MeshMoe for [DeepSeek Harness (DSH)](https://www.deepseek.com/) — run a local 
 - **Zero-registration auth**: the plugin provisions a node token automatically. You never create an account; an anonymous node identity is bound to your machine, claimable later from meshmoe.com.
 - **Honor, not payments**: every mesh task your GPU serves is metered in **Joules** (`J = power × time`, e.g. RTX 3050 @ 80 W × 30 s ≈ 2400 J). Joules are an append-only honor ledger — they can't be bought, sold, or exchanged.
 - **Non-invasive config merge**: your existing DSH providers and default model are preserved. The plugin only *adds* a `meshmoe-local` provider; it never takes over your setup.
+- **Auto-join the mesh**: on load the plugin starts the bundled edge node (if the MeshMoe Node package is installed), pointing it at the local model server. Anonymous registration and Joule metering happen with no user action. If only the plugin is installed (no node package), the local model still works and the plugin logs where to get the node installer.
+- **Honor poller**: reports accumulated Joules from the node's `/health` every 5 minutes.
 
 ## Install
 
