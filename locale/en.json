@@ -1,0 +1,7 @@
+﻿{
+  "meta": {
+    "title": "MeshMoe local model",
+    "description": "Runs MeshMoe-4B on this machine and adds it to DeepSeek Harness as a free, keyless model that works offline. While the model is idle the machine joins the MeshMoe compute mesh and earns Joules, an append-only honor record.",
+    "detail": "docs/DETAIL.md"
+  }
+}

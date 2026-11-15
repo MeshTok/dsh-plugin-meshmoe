@@ -1,34 +1,20 @@
 # ============================================================================
-# dsh-meshmoe bundle patch
-# 挂载两件事:
-#   1. 向 llm-pi-ai 注册 meshmoe-local 本地模型路由 (keyless, 免注册)
-#   2. 把默认模型切到 meshmoe-local/meshmoe-4b
-# 模型: MeshMoe-4B (基于 TokenRhythm/NeoHorse-1-4B, Qwen3.5-4B 后训练, Apache-2.0)
-# 注意: DSH 的 patch entry 是整块替换。插件加载时 lib/merge.js 会读用户现有
-#       patch 并把本条目合并进去(其余 provider 原样保留), 不会覆盖 GUI 配置。
+# dsh-meshmoe - DeepSeek Harness bundle patch
+#
+# This bundle contributes ONE row: the MeshMoe runtime manager. It does not
+# redeclare llm-pi-ai or agent-default-model: patch rows replace an existing
+# row's entire `config`, so re-inserting them would drop every provider the
+# user already configured and could steal their default model.
+#
+# The meshmoe-local provider is added at runtime by lib/index.js, which reads
+# the user's patch, folds the provider into the existing llm-pi-ai row and
+# writes a merged patch. That keeps the user's providers and default model.
 # ============================================================================
-- id: llm-pi-ai
-  name: '@deepseek-ai/dsh-llm-pi-ai'
-  config:
-    providers:
-      meshmoe-local:
-        displayName: MeshMoe (Local)
-        api: openai-completions
-        baseURL: http://127.0.0.1:8081/v1
-        apiKeyEnv: MESHMOE_LOCAL_KEY
-        compat:
-          thinkingFormat: deepseek
-        models:
-          - id: meshmoe-4b
-            name: MeshMoe-4B (Q4_K_M)
-            reasoning: false
-            input: ['text']
-            contextWindow: 32768
-            maxTokens: 8192
-            cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }
-
-- id: agent-default-model
-  name: '@deepseek-ai/dsh-agent-default-model'
-  config:
-    provider: meshmoe-local
-    model: meshmoe-4b
+- insert:
+    - id: meshmoe-runtime
+      name: dsh-meshmoe
+      config:
+        llamaPort: 8081
+        edgeNodePort: 4002
+        autostartModel: true
+        joinMesh: true

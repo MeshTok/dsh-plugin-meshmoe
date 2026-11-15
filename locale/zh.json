@@ -1,0 +1,7 @@
+﻿{
+  "meta": {
+    "title": "MeshMoe 本地模型",
+    "description": "在本机运行 MeshMoe-4B，并把它作为免费、免密钥、可离线使用的模型接入 DeepSeek Harness。模型空闲时本机会加入 MeshMoe 算力网络，赚取焦耳——一份只增不减的荣誉记录。",
+    "detail": "docs/DETAIL.md"
+  }
+}
